@@ -1,35 +1,40 @@
 "use client"
 
+import * as React from "react"
+
 import { Input } from "@/components/ui/input"
-import { useState } from "react"
 import { cn } from "@/lib/utils"
 import { CheckCircledIcon } from "@radix-ui/react-icons"
-
-interface PasswordAndConfirmationProps extends React.FormHTMLAttributes<HTMLFormElement> {
-  className?: string
-  labels?: {
-    password: string
-    confirmPassword: string
-  }
-}
 
 const defaultLabels = {
   password: "Password",
   confirmPassword: "Confirm Password",
 }
 
-export default function PasswordAndConfirmation({
-  className,
-  labels = defaultLabels,
-}: PasswordAndConfirmationProps) {
-  const [password, setPassword] = useState("")
-  const [confirmPassword, setConfirmPassword] = useState("")
+interface PasswordAndConfirmationProps extends React.HTMLAttributes<HTMLDivElement> {
+  labels?: {
+    password?: string
+    confirmPassword?: string
+  }
+}
+
+const PasswordAndConfirmation = React.forwardRef<
+  HTMLDivElement,
+  PasswordAndConfirmationProps
+>(({ className, labels = defaultLabels, ...props }, ref) => {
+  const [password, setPassword] = React.useState("")
+  const [confirmPassword, setConfirmPassword] = React.useState("")
 
   const styleMatch = "text-green-600 bg-green-100"
   const styleNoMatch = "text-red-600 bg-red-100"
 
   return (
-    <div className={cn("relative flex flex-col gap-2", className)}>
+    <div className={cn(
+      "relative flex flex-col gap-2",
+      className
+    )}
+      ref={ref}
+    >
       <div className="relative">
         <Input
           id="password"
@@ -81,4 +86,8 @@ export default function PasswordAndConfirmation({
       </div>
     </div>
   )
-}
+})
+
+PasswordAndConfirmation.displayName = "PasswordAndConfirmation"
+
+export { PasswordAndConfirmation }

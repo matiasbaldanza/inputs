@@ -1,4 +1,4 @@
-import PasswordAndConfirmation from "@/components/PasswordAndConfirmation"
+import { PasswordAndConfirmation } from "@/components/PasswordAndConfirmation"
 
 export default function Home() {
   return (
